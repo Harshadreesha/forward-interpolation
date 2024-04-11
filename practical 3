@@ -1,26 +1,30 @@
-x=10:10:50;
-y=[46;66;81;93;101];
-n=length(x);
-del=%nan*ones(n,n);
-del(:,1)=y;
-for j=2:n
-    for i=1:n-j+1
-        del(i,j)=del(i+1,j-1)-del(i,j-1)
-    end
-end
-del=round(del*10^3)/10^3;
-printf('x\t y\t dy\t d2y\t d3y\td4y');
-disp([x'del]);
-y=0;
-x=42;
-h=x(2)-x(1);
-p=(x-x(i))/h;
-for i=0:n-1
-    t=1;
-    for j=1:p
-        t=t*(p-j+1);
-    end
-    y=y+t*del(1,i+1)/factorial(i);
-end
-printf('y(y2)=%f',y);
+x = 10:10:50;
+y = [46; 66; 81; 93; 101];
+n = length(x);
+del = %nan * ones(n, n);
+del(:, 1) = y;
 
+for j = 2:n
+    for i = 1:n-j+1
+        del(i, j) = del(i+1, j-1) - del(i, j-1);
+    end
+end
+
+del = round(del*10^3)/10^3;
+printf('x\t y\t dy\t d2y\t d3y\t d4y\n');
+disp([x' del]);
+
+x_interpolate = 42;
+y_interpolate = 0;
+h = x(2) - x(1);
+p = (x_interpolate - x(1)) / h;
+
+for i = 1:n-1
+    t = 1;
+    for j = 1:i
+        t = t * (p - j + 1);
+    end
+    y_interpolate = y_interpolate + t * del(1, i+1) / factorial(i);
+end
+
+printf('Interpolated value at x = %d is y = %f\n', x_interpolate, y_interpolate);
